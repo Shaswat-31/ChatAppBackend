@@ -16,11 +16,20 @@ const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({extended:true}));
 app.use(express.json()); 
 app.use(cookieParser());
-const corsOption={
-    origin:'https://chatappfrontend-mciv.onrender.com',
-    credentials:true
+const allowedOrigins = ['https://chatappfrontend-mciv.onrender.com', 'http://localhost:3000'];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 };
-app.use(cors(corsOption)); 
+
+app.use(cors(corsOptions));
 
 
 // routes

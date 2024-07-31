@@ -6,11 +6,13 @@ const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors:{
-        origin:'https://chatappfrontend-mciv.onrender.com',
-        methods:['GET', 'POST'],
+    cors: {
+        origin: ['https://chatappfrontend-mciv.onrender.com', 'http://localhost:3000'],
+        methods: ['GET', 'POST'],
+        credentials: true, // Ensure credentials are allowed
     },
 });
+
 
 export const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
